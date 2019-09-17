@@ -279,7 +279,9 @@ func buildAutoscaler() (core.Autoscaler, error) {
 	if autoscalingOptions.CloudProviderName == "gke" {
 		processors.NodeGroupSetProcessor = &nodegroupset.BalancingNodeGroupSetProcessor{
 			Comparator: nodegroupset.IsGkeNodeInfoSimilar}
-
+	} else if autoscalingOptions.CloudProviderName == "aws" {
+		processors.NodeGroupSetProcessor = &nodegroupset.BalancingNodeGroupSetProcessor{
+			Comparator: nodegroupset.IsEksNodeInfoSimilar}
 	}
 	opts := core.AutoscalerOptions{
 		AutoscalingOptions: autoscalingOptions,
